@@ -8,6 +8,7 @@ import {
   Route,
 } from "react-router-dom";
 import NoteState from './context/notes/NoteState';
+import Alert from './components/Alert';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <NoteState>
         <Router>
           <Navbar title="iNotebook" />
+          <Alert message="This is MKS" />
           <div className="container">
             <Switch>
               <Route exact path="/">
