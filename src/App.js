@@ -12,18 +12,20 @@ import NoteState from './context/notes/NoteState';
 function App() {
   return (
     <>
-    <NoteState>
-      <Router>
-        <Navbar title="iNotebook" />
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/about">
-            <About />
-          </Route>
-        </Switch>
-      </Router>
+      <NoteState>
+        <Router>
+          <Navbar title="iNotebook" />
+          <div className="container">
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route exact path="/about">
+                <About />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
       </NoteState>
     </>
   );
