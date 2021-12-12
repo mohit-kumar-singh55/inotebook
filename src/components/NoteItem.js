@@ -3,7 +3,7 @@ import noteContext from '../context/notes/noteContext';
 
 export const NoteItem = (props) => {
     const context = useContext(noteContext);
-    const { note } = props;
+    const { note, updateNote } = props;
     const { deleteNote } = context;
 
     return (
@@ -13,7 +13,7 @@ export const NoteItem = (props) => {
                     <h5 className="card-title">{note.title}</h5>
                     <p className="card-text">{note.description}</p>
                     <i className="fa fa-trash-alt mx-2" aria-hidden="true" onClick={()=>{deleteNote(note._id)}}></i>
-                    <i className="fa fa-edit mx-2" aria-hidden="true"></i>
+                    <i className="fa fa-edit mx-2" aria-hidden="true" onClick={()=>{updateNote(note)}}></i>
                 </div>
             </div>
         </div>

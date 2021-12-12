@@ -8,6 +8,7 @@ const fetchuser = require('../middleware/fetchuser');
 const router = express.Router();                                    // Express having a built in route
 
 const JWT_SECRET = 'Sniperisgoodb$oy';
+
 // ROUTE 1: Create a user using: POST "/api/auth/createuser"  No Login required
 router.post('/createuser', [
     body('name', 'Enter a valid name').isLength({ min: 3 }),
@@ -108,4 +109,5 @@ router.post('/getuser ', fetchuser, async (req, res) => {
         res.status(500).send("Internal server error");
     }
 })
+
 module.exports = router;
