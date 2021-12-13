@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link,useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export const Navbar = (props) => {
     let location = useLocation();
@@ -14,15 +14,15 @@ export const Navbar = (props) => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <Link className={`nav-link ${location.pathname==='/'? "active":""}`} aria-current="page" to="/">Home</Link>
+                            <Link className={`nav-link ${location.pathname === '/' ? "active" : ""}`} aria-current="page" to="/">Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className={`nav-link ${location.pathname==='/about'? "active":""}`} aria-current="page" to="/about">About</Link>
+                            <Link className={`nav-link ${location.pathname === '/about' ? "active" : ""}`} aria-current="page" to="/about">About</Link>
                         </li>
                     </ul>
                     <form className="d-flex">
-                        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-primary" type="submit">Search</button>
+                        <Link className="btn btn-outline-primary mx-2" to='/login' role="button"><i className="fas fa-sign-in-alt"></i></Link>
+                        <Link className="btn btn-outline-primary mx-2" to='/signup' role="button"><i className="fas fa-user-plus"></i></Link>
                     </form>
                 </div>
             </div>

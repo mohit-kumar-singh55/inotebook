@@ -4,8 +4,8 @@ import { NoteItem } from './NoteItem';
 
 export const Notes = () => {
     const context = useContext(noteContext);
-    const { notes, getNotes } = context;
-    const [note, setNote] = useState({ etitle: "", edescription: "", etag: "default" });
+    const { notes, getNotes, editNote } = context;
+    const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "default" });
 
     useEffect(() => {
         getNotes();
@@ -14,15 +14,16 @@ export const Notes = () => {
 
     // useRef Hook
     const ref = useRef(null);
+    const refClose = useRef(null);
 
     const updateNote = (currentNote) => {
         ref.current.click();
-        setNote({etitle: currentNote.title,edescription: currentNote.description, tag: currentNote.tag});
+        setNote({ id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, tag: currentNote.tag });
     }
 
     const handleClick = (e) => {
-        e.preventDefault();
-        console.log("updating the note",note);
+        editNote(note.id, note.etitle, note.edescription, note.etag);
+        refClose.current.click();
     }
 
     const onChange = (e) => {
@@ -32,7 +33,7 @@ export const Notes = () => {
 
     return (
         <>
-            <button ref={ref} style={{display: "none"}} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button ref={ref} style={{ display: "none" }} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Launch demo modal
             </button>
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -46,21 +47,21 @@ export const Notes = () => {
                             <form>
                                 <div className="mb-3">
                                     <label htmlFor="etitle" className="form-label">Title</label>
-                                    <input type="text" className="form-control" id="etitle" name="etitle" value={note.etitle} aria-describedby="emailHelp" onChange={onChange} />
+                                    <input type="text" className="form-control" id="etitle" name="etitle" value={note.etitle} aria-describedby="emailHelp" onChange={onChange} minLength={5} required />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="edescription" className="form-label">Desceiption</label>
-                                    <input type="text" className="form-control" id="edescription" name="edescription" value={note.edescription}  onChange={onChange} />
+                                    <input type="text" className="form-control" id="edescription" name="edescription" value={note.edescription} onChange={onChange} minLength={5} required />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="etag" className="form-label">Tag</label>
-                                    <input type="text" className="form-control" id="etag" name="etag" value={note.etag}  onChange={onChange} />
+                                    <input type="text" className="form-control" id="etag" name="etag" value={note.etag} onChange={onChange} />
                                 </div>
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" onClick={handleClick} className="btn btn-primary">Update Note</button>
+                            <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button disabled={note.etitle.length<5 || note.edescription.length<5} type="button" onClick={handleClick} className="btn btn-primary">Update Note</button>
                         </div>
                     </div>
                 </div>
@@ -68,6 +69,9 @@ export const Notes = () => {
 
             <div className="row my-3">
                 <h1>Your Notes</h1>
+                <div className="container">
+                    {notes.length === 0 && 'No notes to display!'}
+                </div>
                 {notes.map((note) => {
                     return <NoteItem key={note._id} updateNote={updateNote} note={note} />;
                 })}
