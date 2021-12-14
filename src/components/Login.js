@@ -17,12 +17,12 @@ export default function Login() {
         const json = await response.json();
         console.log(json);
 
-        if(json.success){
+        if (json.success) {
             // save the auth-token and redirect 
             localStorage.setItem('token', json.authToken);
             history.push("/");
         }
-        else{
+        else {
             alert("Invalid Credentials")
         }
     }
@@ -32,12 +32,13 @@ export default function Login() {
     }
 
     return (
-        <div>
+        <div className='container my-2'>
+            <h1>Login</h1>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email address</label>
                     <input type="email" className="form-control" value={credentials.email} onChange={onChange} id="email" name="email" aria-describedby="email" />
-                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                    <div id="emailHelp" className="form-text">Enter only valid email.</div>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="password" className="form-label">Password</label>
