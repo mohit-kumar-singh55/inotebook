@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import noteContext from '../context/notes/noteContext';
 import { NoteItem } from './NoteItem';
 
@@ -7,8 +8,15 @@ export const Notes = () => {
     const { notes, getNotes, editNote } = context;
     const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "default" });
 
+    let history = useHistory();
+
     useEffect(() => {
-        getNotes();
+        if (localStorage.getItem('token')) {
+            getNotes();
+        }
+        else {
+            history.push("/login");
+        }
         // eslint-disable-next-line
     }, [])
 
@@ -61,7 +69,7 @@ export const Notes = () => {
                         </div>
                         <div className="modal-footer">
                             <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button disabled={note.etitle.length<5 || note.edescription.length<5} type="button" onClick={handleClick} className="btn btn-primary">Update Note</button>
+                            <button disabled={note.etitle.length < 5 || note.edescription.length < 5} type="button" onClick={handleClick} className="btn btn-primary">Update Note</button>
                         </div>
                     </div>
                 </div>
